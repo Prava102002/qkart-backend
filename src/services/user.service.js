@@ -10,7 +10,12 @@ const bcrypt = require("bcryptjs");
  * @param {String} id
  * @returns {Promise<User>}
  */
-
+ const getUserById = async (id)=>
+ {
+     const theUser = await User.findOne({ "_id": id });
+     // console.log(theUser,"theUser")
+     return theUser;
+ }
 // TODO: CRIO_TASK_MODULE_UNDERSTANDING_BASICS - Implement getUserByEmail(email)
 /**
  * Get user by email
@@ -18,6 +23,11 @@ const bcrypt = require("bcryptjs");
  * @param {string} email
  * @returns {Promise<User>}
  */
+ const getUserByEmail = async(email) => {
+    const theUser = await User.findOne({ email });
+    // console.log("theUserByMailId",theUser)
+    return theUser;
+}
 
 // TODO: CRIO_TASK_MODULE_UNDERSTANDING_BASICS - Implement createUser(user)
 /**
@@ -41,5 +51,25 @@ const bcrypt = require("bcryptjs");
  *
  * 200 status code on duplicate email - https://stackoverflow.com/a/53144807
  */
-
+ const createUser = async(data) => {
+    if(await User.isEmailTaken(data.email)){
+        // // return res.send(httpStatus.NOT_ACCEPTABLE).json({message: "Email already taken"});
+        throw new ApiError(httpStatus.OK, "Email already taken");
+    }
+    if(!data.email){
+        throw new ApiError(httpStatus.BAD_REQUEST, "Email is not allowed to be empty");
+    }
+    if(!data.name){
+        throw new ApiError(httpStatus.BAD_REQUEST, "Name field is required");
+    }
+    if(!data.password){
+        throw new ApiError(httpStatus.BAD_REQUEST, "Password field is required");
+    }
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(data.password, salt);
+    const user = await User.create({...data, password: hashedPassword});
+    // return {_id:user._id,email:user.email,name:user.name,walletMoney:parseInt(user.walletMoney)};  
+    return user
+}
+module.exports={getUserById ,getUserByEmail,createUser}
 

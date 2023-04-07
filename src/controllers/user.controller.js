@@ -39,6 +39,33 @@ const { userService } = require("../services");
  *
  */
 const getUser = catchAsync(async (req, res) => {
+  let data;
+
+  if(req.query.q === "address"){
+    data = await userService.getUserAddressById(req.params.userId)
+  }
+  else{
+   data = await userService.getUserById(req.params.userId)
+  // console.log("Getuser",data)
+  // console.log(req,"Request user")
+  }
+
+  // if (data.email !== req.user.email){
+  //   throw new ApiError(httpStatus.FORBIDDEN, "User not Authenticated to see other user's data");
+  // }
+
+  if(!data){
+    throw new ApiError(httpStatus.NOT_FOUND,"User Not Found")
+  }
+
+  if(req.query.q ==="address"){
+    res.send({
+      address:data.address
+    })
+  }
+  else{
+  res.send(data)
+  }
 });
 
 
