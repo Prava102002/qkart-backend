@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 const { use } = require("passport");
 
 // TODO: CRIO_TASK_MODULE_UNDERSTANDING_BASICS - Complete userSchema, a Mongoose schema for "users" collection
+
 const userSchema = mongoose.Schema(
   {
     name: {
@@ -31,6 +32,9 @@ const userSchema = mongoose.Schema(
       required: true,
       trim: true,
       minength:8,
+    },
+    password: {
+      type: String,
       validate(value) {
         if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
           throw new Error(
@@ -97,6 +101,8 @@ userSchema.methods.hasSetNonDefaultAddress = async function () {
   const user = this;
    return user.address !== config.default_address;
 };
+
+
 
 /*
  * Create a Mongoose model out of userSchema and export the model as "User"

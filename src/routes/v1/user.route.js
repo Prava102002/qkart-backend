@@ -10,6 +10,9 @@ const router = express.Router();
 router.get("/:userId",
 validate(userValidation.getUser),
 userController.getUser);
+const auth = require("../../middlewares/auth");
+
+
 
 
 module.exports = router;
