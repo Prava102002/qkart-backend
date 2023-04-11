@@ -72,8 +72,6 @@ const bcrypt = require("bcryptjs");
     // return {_id:user._id,email:user.email,name:user.name,walletMoney:parseInt(user.walletMoney)};  
     return user
 }
-module.exports={getUserById ,getUserByEmail,createUser}
-
 // TODO: CRIO_TASK_MODULE_CART - Implement getUserAddressById()
 /**
  * Get subset of user's data by id
@@ -82,7 +80,8 @@ module.exports={getUserById ,getUserByEmail,createUser}
  * @param {ObjectId} id
  * @returns {Promise<User>}
  */
-const getUserAddressById = async (id) => {
+ const getUserAddressById = async (id) => {
+    return User.findOne({_id:id},{email:1,address:1})
 };
 
 /**
@@ -96,4 +95,7 @@ const setAddress = async (user, newAddress) => {
 
   return user.address;
 };
+
+module.exports={getUserById ,getUserByEmail,createUser,getUserAddressById,setAddress}
+
 
