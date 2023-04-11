@@ -53,9 +53,9 @@ const getUser = catchAsync(async (req, res) => {
   // console.log(req,"Request user")
   }
 
-  // if (data.email !== req.user.email){
-  //   throw new ApiError(httpStatus.FORBIDDEN, "User not Authenticated to see other user's data");
-  // }
+  if (data.email !== req.user.email){
+    throw new ApiError(httpStatus.FORBIDDEN, "User not Authenticated to see other user's data");
+  }
 
   if(!data){
     throw new ApiError(httpStatus.NOT_FOUND,"User Not Found")
