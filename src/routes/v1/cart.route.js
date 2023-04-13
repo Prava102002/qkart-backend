@@ -23,8 +23,10 @@ router.put(
 );
 
 router.put(
-  "/checkout",
+  "/checkout",auth,
   cartController.checkout
 );
+
+
 
 module.exports = router;
