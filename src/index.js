@@ -10,7 +10,7 @@ const port = config.port
 mongoose 
 .connect(config.mongoose.url, config.mongoose.options)
 .then(() => {
-    console.log("Connected to database")
+    console.log("Connected to database", config.mongoose.url)
     server = app.listen(port, () => {
         console.log(`Server listening on port ${port}`);
     })
