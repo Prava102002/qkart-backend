@@ -33,12 +33,15 @@ const { authService, userService, tokenService } = require("../services");
  */
 const register = catchAsync(async (req, res) => {
   
-  const user = await userService.createUser(req.body)
-  const tokens = await tokenService.generateAuthTokens(user)
-  // console.log(user,"user")
-  // console.log(tokens,"tokens")
-  // console.log(tokens,"AAAAAAAAAAAAAAAAAAAAAA")
-  res.status(httpStatus.CREATED).send({user,tokens})
+    const user = await userService.createUser(req.body)
+    const tokens = await tokenService.generateAuthTokens(user)
+    // console.log(user,"user")
+    // console.log(tokens,"tokens")
+    // console.log(tokens,"AAAAAAAAAAAAAAAAAAAAAA")
+    res.status(httpStatus.CREATED).send({user,tokens})
+
+  
+  
 });
 
 /**
